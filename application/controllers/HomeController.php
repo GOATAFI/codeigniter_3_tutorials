@@ -27,23 +27,24 @@ class HomeController extends CI_Controller
         // }
 
 
-        $this->load->helper('test');
-        $array = array(
-            'name' => 'Mafi',
-            'profession' => 'Businessman'
-        );
-        $array2 = array(
-            'name' => 'Nahid',
-            'profession' => 'Student'
-        );
+        // $this->load->helper('test');
+        // $array = array(
+        //     'name' => 'Mafi',
+        //     'profession' => 'Businessman'
+        // );
+        // $array2 = array(
+        //     'name' => 'Nahid',
+        //     'profession' => 'Student'
+        // );
         // echo "<pre>";
         // print_r($array2);
         // print_r($array);
-        clean($array);
-        clean($array2);
-        $this->load->library('custom');
+        // clean($array);
+        // clean($array2);
+        // $this->load->library('custom');
         // $this->custom->sum();
-
+        $this->load->helper('form');
+        $this->load->view('form');
     }
 
 
