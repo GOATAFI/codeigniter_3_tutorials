@@ -43,8 +43,12 @@ class HomeController extends CI_Controller
         // clean($array2);
         // $this->load->library('custom');
         // $this->custom->sum();
-        $this->load->helper('form');
-        $this->load->view('form');
+        // $this->load->helper('form');
+        // $this->load->view('form');
+        $this->load->library('session');
+        $this->session->set_userdata('name', 'Mafi');
+        echo $this->session->userdata('name');
+        $this->session->unset_userdata('name');
     }
 
 
