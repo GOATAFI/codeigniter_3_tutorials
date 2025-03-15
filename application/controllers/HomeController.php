@@ -54,6 +54,17 @@ class HomeController extends CI_Controller
     //     echo "<br>";
     //     $var = "Mafi";
     //     echo "My name is $var";
-    // }
+    // } 
 
+    public function my_func()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('username', 'Name', 'required');
+
+        if ($this->form_validation->run() == true) {
+            echo "Validation Success";
+        } else {
+            echo "Blank";
+        }
+    }
 }

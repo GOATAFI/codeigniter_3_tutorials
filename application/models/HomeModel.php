@@ -24,4 +24,26 @@ class HomeModel extends CI_Model
         // return $q->row(); //row() te object return korbe
         return $q->result(); //result() te array return korbe
     }
+    public function add_data($post)
+    {
+        print_r($post);
+        $post['added_on'] = date('d M, Y');
+        $post['status'] = 1;
+        $q = $this->db->insert('register', $post);
+        if ($q) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function all_data()
+    {
+        $q = $this->db->order_by('id', 'asc')->get('register');
+        if ($q->num_rows() > 0) {
+            return $q->result();
+        } else {
+            return false;
+        }
+    }
 }
