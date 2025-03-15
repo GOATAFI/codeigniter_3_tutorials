@@ -60,7 +60,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><img src="<?= base_url('uploads/' . $data->image) ?>" alt="Image" width="50"></td>
                             <td><?= $data->added_on ?></td>
                             <td><?= $status ?></td>
-                            <td>Update</td>
+                            <td> <a href="all-data/<?= $data->id ?>" class="btn btn-outline-primary"> Update </a></td>
                             <td>Delete</td>
                         </tr>
                     <?php } ?>

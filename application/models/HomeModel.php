@@ -36,14 +36,35 @@ class HomeModel extends CI_Model
             return false;
         }
     }
-
-    public function all_data()
+    public function update_data($post)
     {
-        $q = $this->db->order_by('id', 'asc')->get('register');
-        if ($q->num_rows() > 0) {
-            return $q->result();
+        print_r($post);
+        $post['updated_on'] = date('d M, Y');
+        $post['status'] = 1;
+        $q = $this->db->where('id', $post['id'])->update('register', $post);
+        if ($q) {
+            return true;
         } else {
             return false;
+        }
+    }
+
+    public function all_data($id = "")
+    {
+        if ($id != "") {
+            $q = $this->db->where("id", $id)->get('register');
+            if ($q->num_rows() > 0) {
+                return $q->row();
+            } else {
+                return false;
+            }
+        } else {
+            $q = $this->db->order_by('id', 'asc')->get('register');
+            if ($q->num_rows() > 0) {
+                return $q->result();
+            } else {
+                return false;
+            }
         }
     }
 }
