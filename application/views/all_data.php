@@ -22,6 +22,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <body>
     <div class="container">
+        <?php if ($this->session->flashdata('success')) { ?>
+            <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
+            <div class="alert"></div>
+            <?php echo $this->session->flashdata('success'); ?>
+        <?php } ?>
         <h2>All Data</h2>
         <table class="table table-bordered">
             <thead>

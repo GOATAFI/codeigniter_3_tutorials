@@ -75,6 +75,7 @@ class CrudController extends CI_Controller
             // Save data to the database
             $check = $this->homeModel->add_data($post);
             if ($check) {
+                $this->session->set_flashdata('success', 'Data added successfully!');
                 redirect('CrudController/all_data');
             } else {
             }
