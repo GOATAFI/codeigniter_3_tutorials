@@ -61,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?= $data->added_on ?></td>
                             <td><?= $status ?></td>
                             <td> <a href="all-data/<?= $data->id ?>" class="btn btn-outline-primary"> Update </a></td>
-                            <td>Delete</td>
+                            <td> <a href="delete-data/<?= $data->id ?>" class="btn btn-outline-primary"> Delete </a></td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>

@@ -67,4 +67,14 @@ class HomeModel extends CI_Model
             }
         }
     }
+
+    public function delete_data($id)
+    {
+        $q = $this->db->where('id', $id)->delete('register');
+        if ($q) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

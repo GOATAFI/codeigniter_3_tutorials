@@ -158,4 +158,14 @@ class CrudController extends CI_Controller
             $this->load->view('insert');
         }
     }
+
+    public function delete_data($id)
+    {
+        // $this->db->where('id', $id)->delete('register');
+        $check = $this->homeModel->delete_data($id);
+        if ($check) {
+            redirect('CrudController/all_data');
+        } else {
+        }
+    }
 }
