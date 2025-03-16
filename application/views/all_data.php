@@ -24,9 +24,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="container">
         <?php if ($this->session->flashdata('success')) { ?>
             <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
-            <div class="alert"></div>
-            <?php echo $this->session->flashdata('success'); ?>
         <?php } ?>
+
+        <!-- Add Data Button -->
+        <a href="<?= site_url('CrudController/index') ?>" class="btn btn-primary mb-3">Add Data</a>
+
         <h2>All Data</h2>
         <table class="table table-bordered">
             <thead>
@@ -52,7 +54,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         } else {
                             $status = "<span class='badge bg-danger'> Inactive </span>";
                         }
-
                 ?>
                         <tr>
                             <td><?= $data->id ?></td>
@@ -65,17 +66,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><img src="<?= base_url('uploads/' . $data->image) ?>" alt="Image" width="50"></td>
                             <td><?= $data->added_on ?></td>
                             <td><?= $status ?></td>
-                            <td> <a href="all-data/<?= $data->id ?>" class="btn btn-outline-primary"> Update </a></td>
-                            <td> <a href="delete-data/<?= $data->id ?>" class="btn btn-outline-primary"> Delete </a></td>
+                            <td><a href="all-data/<?= $data->id ?>" class="btn btn-outline-primary">Update</a></td>
+                            <td><a href="delete-data/<?= $data->id ?>" class="btn btn-outline-danger">Delete</a></td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="9" class="text-center">No records found</td>
+                        <td colspan="11" class="text-center">No records found</td>
                     </tr>
                 <?php } ?>
-
-
             </tbody>
         </table>
     </div>

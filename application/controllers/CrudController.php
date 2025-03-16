@@ -78,27 +78,23 @@ class CrudController extends CI_Controller
                 $this->session->set_flashdata('success', 'Data added successfully!');
                 redirect('CrudController/all_data');
             } else {
+                echo "Form submitted successfully!";
             }
-            echo "Form submitted successfully!";
         } else {
             // Form validation failed, reload the form with errors
             $this->load->view('insert');
         }
     }
 
-
-
     public function all_data($id = "")
     {
         if ($id != "") {
-
             $data['arr'] = $this->homeModel->all_data($id);
             $this->load->view('insert', $data);
         } else {
             $data['arr'] = $this->homeModel->all_data();
             $this->load->view('all_data', $data);
         }
-        // print_r($data['arr']);
     }
 
     public function update_data()
@@ -114,6 +110,9 @@ class CrudController extends CI_Controller
             // Form validation passed, process the data
             $post = $this->input->post();
 
+            // Fetch the existing record to get the previous image
+            $existing_record = $this->homeModel->all_data($post['id']);
+
             // Handle file upload if a file is selected
             if (!empty($_FILES['image']['name'])) {
                 $config['upload_path'] = './uploads/';
@@ -122,7 +121,15 @@ class CrudController extends CI_Controller
 
                 if ($this->upload->do_upload('image')) {
                     $data = $this->upload->data();
-                    $post['image'] = $data['file_name']; // Save the file name to the database
+                    $post['image'] = $data['file_name']; // Save the new file name to the database
+
+                    // Delete the previous image file if it exists
+                    if (!empty($existing_record->image)) {
+                        $previous_image_path = './uploads/' . $existing_record->image;
+                        if (file_exists($previous_image_path)) {
+                            unlink($previous_image_path); // Delete the previous image file
+                        }
+                    }
                 } else {
                     // File upload failed, show error
                     $error = $this->upload->display_errors();
@@ -131,7 +138,8 @@ class CrudController extends CI_Controller
                     return;
                 }
             } else {
-                $post['image'] = ''; // No file uploaded
+                // No new image uploaded, retain the previous image
+                $post['image'] = $existing_record->image;
             }
 
             // Convert qualification array to a comma-separated string
@@ -142,31 +150,26 @@ class CrudController extends CI_Controller
             }
 
             // Add the current date
-            $post['added_on'] = date('d M, Y');
+            $post['updated_on'] = date('d M, Y');
 
             // Save data to the database
             $check = $this->homeModel->update_data($post);
             if ($check) {
                 redirect('CrudController/all_data');
-            } else {
             }
-            echo "Form submitted successfully!";
         } else {
+            // Form validation failed, reload the form with errors
             $id = $this->input->post('id');
             $data['arr'] = $this->homeModel->all_data($id);
             $this->load->view('insert', $data);
-            // Form validation failed, reload the form with errors
-            $this->load->view('insert');
         }
     }
 
     public function delete_data($id)
     {
-        // $this->db->where('id', $id)->delete('register');
         $check = $this->homeModel->delete_data($id);
         if ($check) {
             redirect('CrudController/all_data');
-        } else {
         }
     }
 }
