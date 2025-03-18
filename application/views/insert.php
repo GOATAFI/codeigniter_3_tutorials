@@ -28,7 +28,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
-    <!-- <?php print_r($arr); ?> -->
     <div class="container">
         <a href="<?= site_url('CrudController/all_data') ?>" class="btn btn-primary">View Data</a>
 
@@ -96,7 +95,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <input type="file" name="image" class="form-control">
                     <?php if (!empty($arr->id)) : ?>
                         <img src="<?= base_url('uploads/' . $arr->image) ?>" alt="" width="100">
-                        <!-- <input type="hidden" name="existing_image" value="<?= $arr->image ?>"> -->
                     <?php endif; ?>
                     <?= form_error('image') ?>
                 </div>
@@ -112,52 +110,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?= form_close() ?>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            <?php if ($this->session->flashdata('validation_errors')) { ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validation Error',
-                    html: '<?php echo str_replace("\n", "", $this->session->flashdata("validation_errors")); ?>',
-                    confirmButtonText: 'OK'
-                });
-            <?php } ?>
-
-            <?php if ($this->session->flashdata('upload_error')) { ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'File Upload Error',
-                    text: '<?php echo $this->session->flashdata("upload_error"); ?>',
-                    confirmButtonText: 'OK'
-                });
-            <?php } ?>
-
-            <?php if ($this->session->flashdata('swal_error') && strpos($this->session->flashdata('swal_error'), 'JPG and PNG') !== false) { ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid File Format',
-                    text: '<?php echo $this->session->flashdata("swal_error"); ?>',
-                    confirmButtonText: 'OK'
-                });
-            <?php } elseif ($this->session->flashdata('swal_error')) { ?>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '<?php echo $this->session->flashdata("swal_error"); ?>',
-                    confirmButtonText: 'OK'
-                });
-            <?php } ?>
-
-            <?php if ($this->session->flashdata('swal_success')) { ?>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: '<?php echo $this->session->flashdata("swal_success"); ?>',
-                    confirmButtonText: 'OK'
-                });
-            <?php } ?>
-        });
-    </script>
     <script>
         $(document).ready(function() {
             // Initialize Select2

@@ -29,7 +29,9 @@ class CrudController extends CI_Controller
         // Set validation rules
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-        $this->form_validation->set_rules('phone', 'Phone', 'required|trim|numeric');
+        $this->form_validation->set_rules('phone', 'Phone', 'required|trim|regex_match[/^\+?\d+$/]', array(
+            'regex_match' => 'Please provide a valid phone number with an optional country code (e.g., +8801712345678).'
+        ));
         $this->form_validation->set_rules('language[]', 'Language', 'required', array('required' => 'Please select at least one language.'));
         $this->form_validation->set_rules('gender', 'Gender', 'required|trim');
 
@@ -45,6 +47,13 @@ class CrudController extends CI_Controller
         if ($this->form_validation->run()) {
             // Form validation passed, process the data
             $post = $this->input->post();
+
+            // Convert language array to a comma-separated string
+            if (isset($post['language']) && is_array($post['language'])) {
+                $post['language'] = implode(', ', $post['language']);
+            } else {
+                $post['language'] = ''; // Set to empty string if no language is selected
+            }
 
             // Handle file upload if a file is selected
             if (!empty($_FILES['image']['name'])) {
@@ -80,7 +89,7 @@ class CrudController extends CI_Controller
             }
 
             // Add the current date
-            $post['added_on'] = date('d M, Y');
+            $post['added_on'] = date('Y-m-d H:i:s');
 
             // Save data to the database
             $check = $this->homeModel->add_data($post);
@@ -90,7 +99,7 @@ class CrudController extends CI_Controller
                 redirect('CrudController/all_data');
             } else {
                 $this->session->set_flashdata('swal_error', 'Error adding data');
-                echo "Form submitted successfully!";
+                redirect('CrudController/index');
             }
         } else {
             // Form validation failed, set error for SweetAlert
@@ -99,6 +108,7 @@ class CrudController extends CI_Controller
             $this->load->view('insert');
         }
     }
+
     public function all_data($id = "")
     {
         $data['current_timestamp'] = date('Y-m-d H:i:s');
@@ -116,7 +126,9 @@ class CrudController extends CI_Controller
         // Set validation rules
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-        $this->form_validation->set_rules('phone', 'Phone', 'required|trim|numeric');
+        $this->form_validation->set_rules('phone', 'Phone', 'required|trim|regex_match[/^\+?\d+$/]', array(
+            'regex_match' => 'Please provide a valid phone number with an optional country code (e.g., +8801712345678).'
+        ));
         $this->form_validation->set_rules('language[]', 'Language', 'required', array('required' => 'Please select at least one language.'));
         $this->form_validation->set_rules('gender', 'Gender', 'required|trim');
 
@@ -183,9 +195,6 @@ class CrudController extends CI_Controller
             // Add the current date
             $post['updated_on'] = date('Y-m-d H:i:s');
 
-            // Remove the 'existing_image' field from the $post array
-            unset($post['existing_image']);
-
             // Save data to the database
             $check = $this->homeModel->update_data($post);
             if ($check) {
@@ -233,7 +242,6 @@ class CrudController extends CI_Controller
         }
     }
 
-    // Custom callback function to validate the image
     public function delete_data($id)
     {
         $check = $this->homeModel->delete_data($id);
