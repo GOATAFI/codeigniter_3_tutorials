@@ -525,8 +525,14 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-
                         <li>
+                            <a href="category" class="waves-effect">
+                                <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                                <span>Category</span>
+                            </a>
+                        </li>
+
+                        <!-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="uim uim-comment-message"></i>
                                 <span>Apps</span>
@@ -784,7 +790,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <!-- Sidebar -->
