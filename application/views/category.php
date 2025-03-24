@@ -50,7 +50,7 @@
                                     <h5 class="card-title">Floating labels</h5>
                                     <p class="card-title-desc">Create beautifully simple form labels that float over your input fields.</p>
 
-                                    <?= form_open() ?>
+                                    <?= form_open_multipart() ?> <!-- Make sure to use form_open_multipart() for file upload -->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3">
@@ -62,31 +62,39 @@
                                                 </select>
                                                 <label for="floatingSelectGrid">Parent Category</label>
                                             </div>
-
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3">
                                                 <input type="text" class="form-control" id="" name="cate_name" placeholder="">
                                                 <label for="floatingFirstnameInput">Category Name</label>
                                                 <?= form_error('cate_name') ?>
                                             </div>
+
                                             <div class="form-floating mb-3">
                                                 <select class="form-select" id="" name="status">
                                                     <option value="" selected>Select</option>
                                                     <option value="1">Active</option>
                                                     <option value="0">Deactive</option>
-
                                                 </select>
                                                 <?= form_error('status') ?>
                                                 <label for="floatingSelectGrid">Status</label>
                                             </div>
-                                        </div>
 
+                                            <!-- Image Upload Field -->
+                                            <div class="mb-3">
+                                                <label for="imageUpload" class="form-label">Upload Image</label>
+                                                <input type="file" class="form-control" id="imageUpload" name="image" accept="image/*">
+                                            </div>
+
+                                        </div>
                                     </div>
+
                                     <div>
                                         <button type="submit" class="btn btn-primary w-md">Submit</button>
                                     </div>
                                     <?= form_close() ?>
+
                                 </div>
                             </div>
                         </div>

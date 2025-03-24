@@ -1,19 +1,23 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
-    public function mail()
+    public function __construct()
     {
-        $this->load->library('email');
-        $this->email->from('nahidparvezmafi@gmail.com', 'Nahid Parvez');
-        $this->email->to('labpc1017@gmail.com');
-        $this->email->subject('Mail test');
-        $this->email->message('This is a test mail');
+        parent::__construct();
+        // Load the form validation library
+        $this->load->library('form_validation');
+        // Load the HomeModel
+        $this->load->model('HomeModel');
+    }
 
-        if ($this->email->send()) {
-            echo "Mail sent";
-        } else {
-            echo "Mail not sent";
-        }
+    public function index()
+    {
+        // Get the banner data
+        $data['banner'] = $this->HomeModel->get_banner();
+        $data['categories'] = $this->HomeModel->get_categ();
+        $data['products'] = $this->HomeModel->get_products();
+        $this->load->view('front/index', $data);
     }
 }

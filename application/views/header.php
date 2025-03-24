@@ -537,6 +537,18 @@
                                 <span>Pincode</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="settings/banner" class="waves-effect">
+                                <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                                <span>Banner</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="product" class="waves-effect">
+                                <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                                <span>Product</span>
+                            </a>
+                        </li>
 
                         <!-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">

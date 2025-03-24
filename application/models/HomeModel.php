@@ -3,55 +3,76 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class HomeModel extends CI_Model
 {
-    public function add_data($post)
+    public function __construct()
     {
-        $post['added_on'] = date('Y-m-d H:i:s');
-        $post['status'] = 1;
-        $q = $this->db->insert('register', $post);
-        if ($q) {
-            return true;
-        } else {
-            return false;
-        }
+        parent::__construct();
+        // Consider adding error reporting here if needed
     }
 
-    public function update_data($post)
+    public function get_banner()
     {
-        $post['updated_on'] = date('Y-m-d H:i:s');
-        $q = $this->db->where('id', $post['id'])->update('register', $post);
-        if ($q) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        try {
+            $this->db->where('status', 1);
+            $this->db->order_by('id', 'desc');
+            $q = $this->db->get('ec_banner');
 
-    public function all_data($id = "")
-    {
-        if ($id != "") {
-            $q = $this->db->where("id", $id)->get('register');
             if ($q->num_rows() > 0) {
-                return $q->row();
-            } else {
-                return false;
+                $result = $q->result();
+                return $result;
             }
-        } else {
-            $q = $this->db->order_by('id', 'asc')->get('register');
+        } catch (Exception $e) {
+            log_message('error', 'Banner query failed: ' . $e->getMessage());
+            return [];
+        }
+    }
+    public function get_categ()
+    {
+        try {
+            $this->db->where('status', 1);
+            $this->db->order_by('id', 'desc');
+            $q = $this->db->get('ec_category');
+
             if ($q->num_rows() > 0) {
-                return $q->result();
-            } else {
-                return false;
+                $result = $q->result();
+                return $result;
             }
+        } catch (Exception $e) {
+            log_message('error', 'Category query failed: ' . $e->getMessage());
+            return [];
+        }
+    }
+    public function get_products()
+    {
+        try {
+            $this->db->order_by('id', 'desc');
+            $q = $this->db->get('ec_product');
+
+            if ($q->num_rows() > 0) {
+                $result = $q->result();
+                return $result;
+            }
+        } catch (Exception $e) {
+            log_message('error', 'Product query failed: ' . $e->getMessage());
+            return [];
         }
     }
 
-    public function delete_data($id)
+    public function category_name($cate_id)
     {
-        $q = $this->db->where('id', $id)->delete('register');
-        if ($q) {
-            return true;
+        // Debug: show the incoming category ID
+        error_log("Looking for category ID: " . $cate_id);
+
+        $q = $this->db->where('cate_id', $cate_id)->get('ec_category');
+
+        // Debug: show the last query
+        error_log("Category query: " . $this->db->last_query());
+
+        if ($q->num_rows() > 0) {
+            $result = $q->row();
+            return $result->cate_name;
         } else {
-            return false;
+            error_log("Category not found for ID: " . $cate_id);
+            return 'No Category';
         }
     }
 }
