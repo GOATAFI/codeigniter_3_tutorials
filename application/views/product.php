@@ -120,14 +120,14 @@ if (empty($pro_id)) {
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <!-- Slug Field -->
+                    <!-- Remove this section from product.php -->
+                    <!-- <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug" value="<?= set_value('slug') ?>">
                             <label for="slug">Slug</label>
                             <?= form_error('slug') ?>
                         </div>
-                    </div>
+                         </div> -->
 
                     <div class="col-md-12">
                         <div class="form-floating mb-3">

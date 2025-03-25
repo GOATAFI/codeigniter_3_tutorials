@@ -75,4 +75,14 @@ class HomeModel extends CI_Model
             return 'No Category';
         }
     }
+    public function product_detail($slug)
+    {
+        $this->db->where('slug', $slug);
+        $query = $this->db->get('ec_product');
+
+        if ($query->num_rows() > 0) {
+            return $query->row_array();
+        }
+        return false;
+    }
 }

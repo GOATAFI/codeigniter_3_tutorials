@@ -40,7 +40,9 @@ class Product extends CI_Controller
 
             if ($this->form_validation->run()) {
                 $post_data = $this->input->post();
-
+                if (!empty($post_data['pro_name'])) {
+                    $post_data['slug'] = $this->generate_slug($post_data['pro_name']);
+                }
                 // Handle file uploads
                 $upload_data = $this->handle_upload();
 
@@ -82,6 +84,27 @@ class Product extends CI_Controller
         $data['pro_id'] = $this->session->userdata('pro_id');
         $this->load->view('product', $data);
     }
+
+    private function generate_slug($string)
+    {
+        // Convert to lowercase
+        $string = strtolower($string);
+
+        // Replace spaces with dashes
+        $string = preg_replace('/\s+/', '-', $string);
+
+        // Remove special characters
+        $string = preg_replace('/[^a-z0-9\-]/', '', $string);
+
+        // Remove multiple dashes
+        $string = preg_replace('/-+/', '-', $string);
+
+        // Trim dashes from beginning and end
+        $string = trim($string, '-');
+
+        return $string;
+    }
+
 
     // Custom validation callback for the main image
     public function validate_main_image()

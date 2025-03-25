@@ -20,4 +20,14 @@ class Home extends CI_Controller
         $data['products'] = $this->HomeModel->get_products();
         $this->load->view('front/index', $data);
     }
+    public function product_detail($slug)
+    {
+        $data['product'] = $this->HomeModel->product_detail($slug);
+
+        if (!$data['product']) {
+            show_404();
+        }
+
+        $this->load->view('front/product-details', $data);
+    }
 }
