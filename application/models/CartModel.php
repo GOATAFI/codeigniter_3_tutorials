@@ -3,6 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class CartModel extends CI_Model
 {
+    public function get_userid()
+    {
+        if (!empty($this->session->userdata('login_id'))) {
+            return $this->session->userdata('login_id');
+        } else {
+            return $this->session->userdata('user_id');
+        }
+    }
     public function add_to_cart($post)
     {
         // Validate required fields
@@ -46,7 +54,7 @@ class CartModel extends CI_Model
                     'pro_qty' => $post['pro_qty'],
                     'pro_name' => $prod->pro_name,
                     'pro_price' => $prod->selling_price, // Using selling_price here
-                    'mrp' => $prod->mrp, // Storing mrp for reference
+                    //   // Storing mrp for reference
                     'slug' => $prod->slug,
                     'pro_image' => $prod->pro_main_image,
                     'added_on' => date('Y-m-d H:i:s'),

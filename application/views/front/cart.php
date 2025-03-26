@@ -150,7 +150,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <span>$<?= isset($cart_total) ? number_format($cart_total + 20, 2) : '20.00' ?></span>
                             </div> -->
                             <div class="tp-cart-checkout-proceed">
-                                <a href="<?= base_url('checkout') ?>" class="tp-cart-checkout-btn w-100">Proceed to Checkout</a>
+                                <a href="checkout" class="tp-cart-checkout-btn w-100">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>
